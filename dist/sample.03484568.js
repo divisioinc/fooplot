@@ -235,7 +235,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _constants = require("./constants");
+var FOOPLOT_CONSTANTS = _interopRequireWildcard(require("./constants"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 /********************************************************************
 Online plotter:   http://fooplot.com/
@@ -268,7 +272,19 @@ feature on www.fooplot.com to get an IFRAME-based plotter that is
 hotlinked to the latest version of this code.
 
 ********************************************************************/
-// keeps track of all instances, mainly for being able to access the class in event handlers
+var FOOPLOT_MATH = FOOPLOT_CONSTANTS.FOOPLOT_MATH,
+    FOOPLOT_TYPE_FUNCTION = FOOPLOT_CONSTANTS.FOOPLOT_TYPE_FUNCTION,
+    FOOPLOT_TYPE_POLAR = FOOPLOT_CONSTANTS.FOOPLOT_TYPE_POLAR,
+    FOOPLOT_TYPE_PARAMETRIC = FOOPLOT_CONSTANTS.FOOPLOT_TYPE_PARAMETRIC,
+    FOOPLOT_TYPE_POINTS = FOOPLOT_CONSTANTS.FOOPLOT_TYPE_POINTS,
+    FOOPLOT_MODE_MOVE = FOOPLOT_CONSTANTS.FOOPLOT_MODE_MOVE,
+    FOOPLOT_MODE_ZOOMBOX = FOOPLOT_CONSTANTS.FOOPLOT_MODE_ZOOMBOX,
+    FOOPLOT_MODE_INTERSECTION = FOOPLOT_CONSTANTS.FOOPLOT_MODE_INTERSECTION,
+    FOOPLOT_MODE_TRACE = FOOPLOT_CONSTANTS.FOOPLOT_MODE_TRACE,
+    FOOPLOT_UNITS_PI = FOOPLOT_CONSTANTS.FOOPLOT_UNITS_PI,
+    FOOPLOT_UNITS_E = FOOPLOT_CONSTANTS.FOOPLOT_UNITS_E,
+    FOOPLOT_MSIE = FOOPLOT_CONSTANTS.FOOPLOT_MSIE; // keeps track of all instances, mainly for being able to access the class in event handlers
+
 var FOOPLOT_INSTANCES = [];
 
 function FooplotSVGRecorder() {
@@ -354,7 +370,7 @@ function Fooplot(container, options) {
   this.container.style.webkitUserSelect = 'none';
   this.container.style.MozUserSelect = 'none';
   this.container.style.userSelect = 'none';
-  if (_constants.FOOPLOT_MSIE) this.container.unselectable = true;
+  if (FOOPLOT_MSIE) this.container.unselectable = true;
   this.container.style.cursor = 'move';
   this.cover = document.createElement('div');
   this.cover.style.position = 'absolute';
@@ -362,7 +378,7 @@ function Fooplot(container, options) {
   this.cover.style.height = '100%';
   this.container.style.webkitUserSelect = 'none';
   this.container.style.MozUserSelect = 'none';
-  if (_constants.FOOPLOT_MSIE) this.cover.unselectable = true;
+  if (FOOPLOT_MSIE) this.cover.unselectable = true;
   this.cover.style.zIndex = 100;
   this.cover.style.background = '#ffffff';
   this.cover.style.filter = 'alpha(opacity=0)';
@@ -373,7 +389,7 @@ function Fooplot(container, options) {
   this.subcontainer.style.zIndex = '1';
   this.subcontainer.style.webkitUserSelect = 'none';
   this.subcontainer.style.userSelect = 'none';
-  if (_constants.FOOPLOT_MSIE) this.subcontainer.unselectable = true;
+  if (FOOPLOT_MSIE) this.subcontainer.unselectable = true;
   this.container.appendChild(this.subcontainer);
   this.recorder = new FooplotSVGRecorder();
   this.toolcontainer = document.createElement('div');
@@ -460,7 +476,7 @@ function Fooplot(container, options) {
   };
 
   this.toolsMode = [];
-  this.selectedMode = _constants.FOOPLOT_MODE_MOVE;
+  this.selectedMode = FOOPLOT_MODE_MOVE;
 
   this.selectMode = function (obj) {
     this.hideIntersection();
@@ -546,10 +562,10 @@ function Fooplot(container, options) {
     _self.zoom(0.5);
   }, null, 'Zoom Out');
   this.addToolSeparator();
-  this.toolMove = this.addToolButton('url(\'data:image/gif;base64,R0lGODlhIAAgAPY/AP9/AP+AAP+AAf+AAv+BBP+CBf+FDP+GDv+HD/+IEf+IEv+JE/+KFv+MGv+NG/+OHf+PH/+PIP+QIf+QIv+TKP+UKf+bOP+dPP+fQP+jSP+oUv+pVP+rWP+uXf+xY/+1a/+3cP+6dv+7d/+7eP+8ef+9e/++ff/Dh//DiP/Hj//Ikv/Klf/Ll//LmP/NnP/Pn//du//fv//hw//ixv/kyv/lzP/mzv/o0f/o0v/p1P/t2//u3v/v4P/w4f/+/v///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAEAALAAAAAAgACAAAAf0gEBAAAEAhoeIiYqHhYJAhYuRkoyDk4mQloaYlhw5D5mEoAAjPz87E6KWBC6lpaepkQgwra09qLCJDhYWIKUiGhsXuJEZpRbDk8U/x8jExs0TwonKzIgUm4sRPBuK1IogLJMPOz8a3c+JvSiRDjq+u/C8pR7xuymlJIoBOLT9/v+lPijqALDgPxmLTPjKwLAhqR8gGjZsUYoGgkisMJxb9u2HjQWRAhCAoXEaOkQgcICchCDCxmqHMjBo5q3Zopo2TXLMaSgDCHClWIwYUSEngxv+VGAbpsAGrXU8DSGYgU/U0kUIYoCIqg/WI66UBIXi2QhIIAA7\')', null, _constants.FOOPLOT_MODE_MOVE, 'Move');
-  this.toolZoomBox = this.addToolButton('url(\'data:image/gif;base64,R0lGODlhIAAgAPYAAP9/AP+AAP+AAf+AAv+BA/+BBP+CBf+DB/+GDf+GDv+HD/+KFv+LGP+MGv+OHf+PH/+QIv+TJ/+UKf+UKv+YMv+bN/+gQf+iRf+jSP+kSf+nT/+nUP+oUv+pU/+pVP+qVv+sWf+uXv+wYf+xY/+1a/+2bv+3b/+5c/+8ev+9fP+/gP/Bg//Chv/Eiv/Gjf/Hj//HkP/Jk//JlP/Ll//Mmf/Onv/Qof/Xr//Ysv/bt//cuv/evf/evv/gwf/gwv/hw//jx//kyv/mzf/r1//v4P/w4f/w4v/x4//06v/27f/48f/59P/69v/79//7+P/8+v/9+//9/P/+/f/+/v///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAFUALAAAAAAgACAAAAf+gFVVAAEAhoeIiYqHhYJVhYuRkoyDk5aTkJeajJoHDZuaFzFAS1RJOiwSoIoKNVSvsK9LJ5mgFUSxua8/C6sKR09LT03CS07Gx1Q4qzZUGoaQAdKHL1Qimxmvz4qZ1Uq9lzTahgfl5geG1VQfmkLjADe5JumvL5cHT+/xsfMA6j+XIMDatg9WP3VELgUo5cxQwVcHX+nQ5OPdjCEYMYagR2WFJnXbJIHUROGdSCpEFGxKQYVEhJcwY0ZoZgHUAXe6cnJY5WBHTl1Pdq4ywTAXERQMg64C8GDEjCBIdrT4oDKDk1dP2C2VZBWr0K2Lur5SBXYRhqsqykrCkELtqloObhU9ipsogCO60AAICgQAOw==\')', null, _constants.FOOPLOT_MODE_ZOOMBOX, 'Zoom Box');
-  this.toolTrace = this.addToolButton('url(\'data:image/gif;base64,R0lGODlhIAAgAMYAAP9/AP+AAP+AAf+AAv+BBP+CBf+FDP+GDv+HD/+IEf+IEv+JE/+KFv+MGv+NG/+OHf+PH/+PIP+QIf+QIv+TKP+UKf+bOP+dPP+fQP+jSP+oUv+pVP+rWP+uXf+xY/+1a/+3cP+6dv+7d/+7eP+8ef+9e/++ff/Dh//DiP/Hj//Ikv/Klf/Ll//LmP/NnP/Pn//du//fv//hw//ixv/kyv/lzP/mzv/o0f/o0v/p1P/t2//u3v/v4P/w4f/+/v////9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/ACH5BAEAAD4ALAAAAAAgACAAAAdfgD4+AAEAhoeIiYqHhYI+hYuRkoyDk5aTkJeajJudnp+goaKjpKWmp6iJP6urqD+qr6SxirOgtbSsnre4rZu7vL+jrL2ph8GmxMUAw8rNzs/Q0YqZ0qePxQGOhKaNPoEAOw==\')', null, _constants.FOOPLOT_MODE_TRACE, 'Trace');
-  this.toolIntersection = this.addToolButton('url(\'data:image/gif;base64,R0lGODlhIAAgAMYAAP9/AP+AAP+AAf+AAv+BBP+CBf+FDP+GDv+HD/+IEf+IEv+JE/+KFv+MGv+NG/+OHf+PH/+PIP+QIf+QIv+TKP+UKf+bOP+dPP+fQP+jSP+oUv+pVP+rWP+uXf+xY/+1a/+3cP+6dv+7d/+7eP+8ef+9e/++ff/Dh//DiP/Hj//Ikv/Klf/Ll//LmP/NnP/Pn//du//fv//hw//ixv/kyv/lzP/mzv/o0f/o0v/p1P/t2//u3v/v4P/w4f/+/v////9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/ACH5BAEAAD4ALAAAAAAgACAAAAdygD4+AAEAhoeIiYqHhYI+hYuRkoyDk5aTkJeajJuRP52gn6CaP6Kjlqank6mqi6ytiq+opaWeo6yyspK5ibq7trS+tp7BsLHFxojBwqe0yb2HzJ24z7ywvrXNl9mb0tHe3rfP44uZ5OeLj+gBjoTPjT6BADs=\')', null, _constants.FOOPLOT_MODE_INTERSECTION, 'Find Intersections and Roots');
+  this.toolMove = this.addToolButton('url(\'data:image/gif;base64,R0lGODlhIAAgAPY/AP9/AP+AAP+AAf+AAv+BBP+CBf+FDP+GDv+HD/+IEf+IEv+JE/+KFv+MGv+NG/+OHf+PH/+PIP+QIf+QIv+TKP+UKf+bOP+dPP+fQP+jSP+oUv+pVP+rWP+uXf+xY/+1a/+3cP+6dv+7d/+7eP+8ef+9e/++ff/Dh//DiP/Hj//Ikv/Klf/Ll//LmP/NnP/Pn//du//fv//hw//ixv/kyv/lzP/mzv/o0f/o0v/p1P/t2//u3v/v4P/w4f/+/v///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAEAALAAAAAAgACAAAAf0gEBAAAEAhoeIiYqHhYJAhYuRkoyDk4mQloaYlhw5D5mEoAAjPz87E6KWBC6lpaepkQgwra09qLCJDhYWIKUiGhsXuJEZpRbDk8U/x8jExs0TwonKzIgUm4sRPBuK1IogLJMPOz8a3c+JvSiRDjq+u/C8pR7xuymlJIoBOLT9/v+lPijqALDgPxmLTPjKwLAhqR8gGjZsUYoGgkisMJxb9u2HjQWRAhCAoXEaOkQgcICchCDCxmqHMjBo5q3Zopo2TXLMaSgDCHClWIwYUSEngxv+VGAbpsAGrXU8DSGYgU/U0kUIYoCIqg/WI66UBIXi2QhIIAA7\')', null, FOOPLOT_MODE_MOVE, 'Move');
+  this.toolZoomBox = this.addToolButton('url(\'data:image/gif;base64,R0lGODlhIAAgAPYAAP9/AP+AAP+AAf+AAv+BA/+BBP+CBf+DB/+GDf+GDv+HD/+KFv+LGP+MGv+OHf+PH/+QIv+TJ/+UKf+UKv+YMv+bN/+gQf+iRf+jSP+kSf+nT/+nUP+oUv+pU/+pVP+qVv+sWf+uXv+wYf+xY/+1a/+2bv+3b/+5c/+8ev+9fP+/gP/Bg//Chv/Eiv/Gjf/Hj//HkP/Jk//JlP/Ll//Mmf/Onv/Qof/Xr//Ysv/bt//cuv/evf/evv/gwf/gwv/hw//jx//kyv/mzf/r1//v4P/w4f/w4v/x4//06v/27f/48f/59P/69v/79//7+P/8+v/9+//9/P/+/f/+/v///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAFUALAAAAAAgACAAAAf+gFVVAAEAhoeIiYqHhYJVhYuRkoyDk5aTkJeajJoHDZuaFzFAS1RJOiwSoIoKNVSvsK9LJ5mgFUSxua8/C6sKR09LT03CS07Gx1Q4qzZUGoaQAdKHL1Qimxmvz4qZ1Uq9lzTahgfl5geG1VQfmkLjADe5JumvL5cHT+/xsfMA6j+XIMDatg9WP3VELgUo5cxQwVcHX+nQ5OPdjCEYMYagR2WFJnXbJIHUROGdSCpEFGxKQYVEhJcwY0ZoZgHUAXe6cnJY5WBHTl1Pdq4ywTAXERQMg64C8GDEjCBIdrT4oDKDk1dP2C2VZBWr0K2Lur5SBXYRhqsqykrCkELtqloObhU9ipsogCO60AAICgQAOw==\')', null, FOOPLOT_MODE_ZOOMBOX, 'Zoom Box');
+  this.toolTrace = this.addToolButton('url(\'data:image/gif;base64,R0lGODlhIAAgAMYAAP9/AP+AAP+AAf+AAv+BBP+CBf+FDP+GDv+HD/+IEf+IEv+JE/+KFv+MGv+NG/+OHf+PH/+PIP+QIf+QIv+TKP+UKf+bOP+dPP+fQP+jSP+oUv+pVP+rWP+uXf+xY/+1a/+3cP+6dv+7d/+7eP+8ef+9e/++ff/Dh//DiP/Hj//Ikv/Klf/Ll//LmP/NnP/Pn//du//fv//hw//ixv/kyv/lzP/mzv/o0f/o0v/p1P/t2//u3v/v4P/w4f/+/v////9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/ACH5BAEAAD4ALAAAAAAgACAAAAdfgD4+AAEAhoeIiYqHhYI+hYuRkoyDk5aTkJeajJudnp+goaKjpKWmp6iJP6urqD+qr6SxirOgtbSsnre4rZu7vL+jrL2ph8GmxMUAw8rNzs/Q0YqZ0qePxQGOhKaNPoEAOw==\')', null, FOOPLOT_MODE_TRACE, 'Trace');
+  this.toolIntersection = this.addToolButton('url(\'data:image/gif;base64,R0lGODlhIAAgAMYAAP9/AP+AAP+AAf+AAv+BBP+CBf+FDP+GDv+HD/+IEf+IEv+JE/+KFv+MGv+NG/+OHf+PH/+PIP+QIf+QIv+TKP+UKf+bOP+dPP+fQP+jSP+oUv+pVP+rWP+uXf+xY/+1a/+3cP+6dv+7d/+7eP+8ef+9e/++ff/Dh//DiP/Hj//Ikv/Klf/Ll//LmP/NnP/Pn//du//fv//hw//ixv/kyv/lzP/mzv/o0f/o0v/p1P/t2//u3v/v4P/w4f/+/v////9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/AP9/ACH5BAEAAD4ALAAAAAAgACAAAAdygD4+AAEAhoeIiYqHhYI+hYuRkoyDk5aTkJeajJuRP52gn6CaP6Kjlqank6mqi6ytiq+opaWeo6yyspK5ibq7trS+tp7BsLHFxojBwqe0yb2HzJ24z7ywvrXNl9mb0tHe3rfP44uZ5OeLj+gBjoTPjT6BADs=\')', null, FOOPLOT_MODE_INTERSECTION, 'Find Intersections and Roots');
   this.zoomboxBox = document.createElement('div');
   this.zoomboxBox.style.position = 'absolute';
   this.zoomboxBox.style.visibility = 'hidden';
@@ -621,7 +637,7 @@ function Fooplot(container, options) {
   this.intersectionDisplay.style.zIndex = 50;
   this.intersectionDisplay.appendChild(this.intersectionDisplayText);
   this.container.appendChild(this.intersectionDisplay);
-  this.selectMode(_constants.FOOPLOT_MODE_MOVE);
+  this.selectMode(FOOPLOT_MODE_MOVE);
   this.canvas = false;
   this.context = false;
   this.vars = {
@@ -668,7 +684,7 @@ function Fooplot(container, options) {
   this.canvas = document.createElement('canvas');
 
   try {
-    if (_constants.FOOPLOT_MSIE) {
+    if (FOOPLOT_MSIE) {
       G_vmlCanvasManager.initElement(this.canvas);
     }
   } catch (error) {}
@@ -754,9 +770,9 @@ function Fooplot(container, options) {
       for (var _y3 = Math.floor(this.ymin / realygrid) * realygrid; _y3 <= this.ymax; _y3 += realygrid) {
         py = (this.ymax - _y3) / (this.ymax - this.ymin) * this.height;
 
-        if (this.ygridunits === _constants.FOOPLOT_UNITS_PI) {
+        if (this.ygridunits === FOOPLOT_UNITS_PI) {
           printy = this.tryToMakeFraction(_y3 / this.vars.pi) + 'π';
-        } else if (this.ygridunits === _constants.FOOPLOT_UNITS_E) {
+        } else if (this.ygridunits === FOOPLOT_UNITS_E) {
           printy = this.tryToMakeFraction(_y3 / this.vars.e) + 'e';
         } else {
           printy = parseFloat(Math.round(_y3 * ordery) / ordery);
@@ -778,9 +794,9 @@ function Fooplot(container, options) {
       for (var x = Math.floor(this.xmin / realxgrid) * realxgrid; x <= this.xmax; x += realxgrid) {
         px = (x - this.xmin) / (this.xmax - this.xmin) * this.width;
 
-        if (this.xgridunits === _constants.FOOPLOT_UNITS_PI) {
+        if (this.xgridunits === FOOPLOT_UNITS_PI) {
           printx = this.tryToMakeFraction(x / this.vars.pi) + 'π';
-        } else if (this.xgridunits === _constants.FOOPLOT_UNITS_E) {
+        } else if (this.xgridunits === FOOPLOT_UNITS_E) {
           printx = this.tryToMakeFraction(x / this.vars.e) + 'e';
         } else {
           printx = parseFloat(Math.round(x * orderx) / orderx);
@@ -894,25 +910,25 @@ function Fooplot(container, options) {
       offy += _self.container.parentNode.offsetTop;
     }
 
-    var mx = (!_constants.FOOPLOT_MSIE ? e.pageX : document.body.scrollLeft + event.clientX) - offx;
-    var my = (!_constants.FOOPLOT_MSIE ? e.pageY : document.body.scrollTop + event.clientY) - offy;
+    var mx = (!FOOPLOT_MSIE ? e.pageX : document.body.scrollLeft + event.clientX) - offx;
+    var my = (!FOOPLOT_MSIE ? e.pageY : document.body.scrollTop + event.clientY) - offy;
 
     if (_self.isMouseDown) {
       _self.dpx = mx - _self.dragInitX;
       _self.dpy = my - _self.dragInitY;
 
       switch (_self.selectedMode) {
-        case _constants.FOOPLOT_MODE_MOVE:
+        case FOOPLOT_MODE_MOVE:
           _self.subcontainer.style.left = _self.dpx + 'px';
           _self.subcontainer.style.top = _self.dpy + 'px';
           break;
 
-        case _constants.FOOPLOT_MODE_ZOOMBOX:
+        case FOOPLOT_MODE_ZOOMBOX:
           _self.zoomboxBox.style.width = _self.dpx + 'px';
           _self.zoomboxBox.style.height = _self.dpy + 'px';
           break;
 
-        case _constants.FOOPLOT_MODE_TRACE:
+        case FOOPLOT_MODE_TRACE:
           var initx = mx / _self.width * (_self.xmax - _self.xmin) + _self.xmin;
           var order = Math.pow(10, 2 - Math.floor(Math.log(_self.xmax - _self.xmin) / Math.log(10)));
           var initx = parseFloat(Math.floor(initx * order) / order);
@@ -959,14 +975,14 @@ function Fooplot(container, options) {
       offy += _self.container.parentNode.offsetTop;
     }
 
-    var mx = (!_constants.FOOPLOT_MSIE ? e.pageX : document.body.scrollLeft + event.clientX) - offx;
-    var my = (!_constants.FOOPLOT_MSIE ? e.pageY : document.body.scrollTop + event.clientY) - offy;
+    var mx = (!FOOPLOT_MSIE ? e.pageX : document.body.scrollLeft + event.clientX) - offx;
+    var my = (!FOOPLOT_MSIE ? e.pageY : document.body.scrollTop + event.clientY) - offy;
     _self.dragInitX = mx;
     _self.dragInitY = my;
     _self.isMouseDown = true;
 
     switch (_self.selectedMode) {
-      case _constants.FOOPLOT_MODE_ZOOMBOX:
+      case FOOPLOT_MODE_ZOOMBOX:
         _self.zoomboxBox.style.left = mx + 'px';
         _self.zoomboxBox.style.top = my + 'px';
         _self.zoomboxBox.style.width = '0px';
@@ -992,14 +1008,14 @@ function Fooplot(container, options) {
       offy += _self.container.parentNode.offsetTop;
     }
 
-    var mx = (!_constants.FOOPLOT_MSIE ? e.pageX : document.body.scrollLeft + event.clientX) - offx;
-    var my = (!_constants.FOOPLOT_MSIE ? e.pageY : document.body.scrollTop + event.clientY) - offy;
+    var mx = (!FOOPLOT_MSIE ? e.pageX : document.body.scrollLeft + event.clientX) - offx;
+    var my = (!FOOPLOT_MSIE ? e.pageY : document.body.scrollTop + event.clientY) - offy;
 
     if (_self.isMouseDown) {
       _self.isMouseDown = false;
 
       switch (_self.selectedMode) {
-        case _constants.FOOPLOT_MODE_MOVE:
+        case FOOPLOT_MODE_MOVE:
           if (_self.zoomTimeout) return null;
           var dx = _self.dpx / _self.width * (_self.xmax - _self.xmin);
           var dy = _self.dpy / _self.height * (_self.ymax - _self.ymin);
@@ -1018,10 +1034,10 @@ function Fooplot(container, options) {
 
           break;
 
-        case _constants.FOOPLOT_MODE_ZOOMBOX:
+        case FOOPLOT_MODE_ZOOMBOX:
           _self.zoomboxBox.style.visibility = 'hidden';
 
-          _self.selectMode(_constants.FOOPLOT_MODE_MOVE);
+          _self.selectMode(FOOPLOT_MODE_MOVE);
 
           if (parseInt(_self.zoomboxBox.style.width) > 5 && parseInt(_self.zoomboxBox.style.height) > 5) {
             var newxmin = parseInt(_self.zoomboxBox.style.left) / _self.width * (_self.xmax - _self.xmin) + _self.xmin;
@@ -1044,12 +1060,12 @@ function Fooplot(container, options) {
 
           break;
 
-        case _constants.FOOPLOT_MODE_INTERSECTION:
+        case FOOPLOT_MODE_INTERSECTION:
           _self.showIntersection(_self.dragInitX / _self.width * (_self.xmax - _self.xmin) + _self.xmin);
 
           break;
 
-        case _constants.FOOPLOT_MODE_TRACE:
+        case FOOPLOT_MODE_TRACE:
           var initx = mx / _self.width * (_self.xmax - _self.xmin) + _self.xmin;
           var order = Math.pow(10, 2 - Math.floor(Math.log(_self.xmax - _self.xmin) / Math.log(10)));
           var initx = parseFloat(Math.floor(initx * order) / order);
@@ -1167,12 +1183,12 @@ function Fooplot(container, options) {
         isRedoLoop = false;
     this.context.beginPath();
     var started = false;
-    var pxstep = _constants.FOOPLOT_MSIE ? 1 : 0.25;
+    var pxstep = FOOPLOT_MSIE ? 1 : 0.25;
     this.context.moveTo(-10, this.height / 2);
 
     for (var _px = 0; _px < this.width; _px += pxstep) {
       this.vars.x = _px / this.width * (this.xmax - this.xmin) + this.xmin;
-      y = jeq(this.vars, _constants.FOOPLOT_MATH);
+      y = jeq(this.vars, FOOPLOT_MATH);
 
       if (isNaN(y)) {
         if (!lastIsNaN) {
@@ -1223,7 +1239,7 @@ function Fooplot(container, options) {
     var started = false;
 
     for (this.vars.theta = thetamin; this.vars.theta <= thetamax; this.vars.theta += thetastep) {
-      r = jeq(this.vars, _constants.FOOPLOT_MATH);
+      r = jeq(this.vars, FOOPLOT_MATH);
       x = r * Math.cos(this.vars.theta);
       y = r * Math.sin(this.vars.theta);
       if (isNaN(y) || isNaN(x)) thisOnScreen = false;else {
@@ -1255,8 +1271,8 @@ function Fooplot(container, options) {
     this.context.beginPath();
 
     for (this.vars.s = smin; this.vars.s <= smax; this.vars.s += sstep) {
-      x = jeqx(this.vars, _constants.FOOPLOT_MATH);
-      y = jeqy(this.vars, _constants.FOOPLOT_MATH);
+      x = jeqx(this.vars, FOOPLOT_MATH);
+      y = jeqy(this.vars, FOOPLOT_MATH);
       if (isNaN(y) || isNaN(x)) thisOnScreen = false;else {
         px = (x - this.xmin) / (this.xmax - this.xmin) * this.width;
         py = (this.ymax - y) / (this.ymax - this.ymin) * this.height;
@@ -1297,18 +1313,18 @@ function Fooplot(container, options) {
     }
 
     this.vars.x = initx;
-    y0 = jeq0(this.vars, _constants.FOOPLOT_MATH);
-    y1 = jeq1(this.vars, _constants.FOOPLOT_MATH);
+    y0 = jeq0(this.vars, FOOPLOT_MATH);
+    y1 = jeq1(this.vars, FOOPLOT_MATH);
     y = y0 - y1;
 
     while (i < 100) {
       i++;
-      y0 = jeq0(this.vars, _constants.FOOPLOT_MATH);
-      y1 = jeq1(this.vars, _constants.FOOPLOT_MATH);
+      y0 = jeq0(this.vars, FOOPLOT_MATH);
+      y1 = jeq1(this.vars, FOOPLOT_MATH);
       y = y0 - y1;
       this.vars.x += d;
-      y0 = jeq0(this.vars, _constants.FOOPLOT_MATH);
-      y1 = jeq1(this.vars, _constants.FOOPLOT_MATH);
+      y0 = jeq0(this.vars, FOOPLOT_MATH);
+      y1 = jeq1(this.vars, FOOPLOT_MATH);
       ypd = y0 - y1;
 
       if (y - ypd != 0) {
@@ -1316,8 +1332,8 @@ function Fooplot(container, options) {
       }
     }
 
-    y0 = jeq0(this.vars, _constants.FOOPLOT_MATH);
-    y1 = jeq1(this.vars, _constants.FOOPLOT_MATH);
+    y0 = jeq0(this.vars, FOOPLOT_MATH);
+    y1 = jeq1(this.vars, FOOPLOT_MATH);
     y = y0 - y1;
     if (isNaN(this.vars.x)) return null;
     if (Math.abs(y) > 1e-9) return null;else return parseFloat(this.vars.x.toFixed(9));
@@ -1332,7 +1348,7 @@ function Fooplot(container, options) {
     this.vars.x = initx;
 
     for (var _i in this.plots) {
-      if (this.plots[_i]['type'] === _constants.FOOPLOT_TYPE_FUNCTION) {
+      if (this.plots[_i]['type'] === FOOPLOT_TYPE_FUNCTION) {
         y = this.plots[_i].jeq(this.vars);
 
         if (Math.abs(y - inity) < minDistance) {
@@ -1365,16 +1381,16 @@ function Fooplot(container, options) {
         bestPair = null;
     this.plotstmp = this.plots.slice(0);
     this.plotstmp.unshift({
-      'type': _constants.FOOPLOT_TYPE_FUNCTION,
+      'type': FOOPLOT_TYPE_FUNCTION,
       'jeq': function jeq() {
         return 0;
       }
     });
 
     for (var _i2 in this.plotstmp) {
-      if (this.plotstmp[_i2]['type'] === _constants.FOOPLOT_TYPE_FUNCTION) {
+      if (this.plotstmp[_i2]['type'] === FOOPLOT_TYPE_FUNCTION) {
         for (var _j in this.plotstmp) {
-          if (_i2 != _j && this.plotstmp[_j]['type'] === _constants.FOOPLOT_TYPE_FUNCTION) {
+          if (_i2 != _j && this.plotstmp[_j]['type'] === FOOPLOT_TYPE_FUNCTION) {
             yi = this.plotstmp[_i2].jeq(this.vars);
             yj = this.plotstmp[_j].jeq(this.vars);
 
@@ -1479,7 +1495,7 @@ function Fooplot(container, options) {
 
     for (var _i4 = 0; _i4 < v.length; _i4++) {
       if (!this.parseEquationIsArray(v[_i4])) {
-        if (_constants.FOOPLOT_MATH[v[_i4]] != undefined) {
+        if (FOOPLOT_MATH[v[_i4]] != undefined) {
           if (v[_i4 + 1] === null) {
             this.parseEquationEror = "function " + v[_i4] + " requires an argument.";
             return null;
@@ -1540,7 +1556,7 @@ function Fooplot(container, options) {
         i--;
       } else if (tokens[i].match(/^[a-z][a-z0-9]*$/i) && vars[tokens[i]] != undefined) {
         tokens[i] = 'vars.' + tokens[i];
-      } else if (tokens[i].length > 0 && tokens[i].match(/^[a-z][a-z0-9]*$/i) && _constants.FOOPLOT_MATH[tokens[i]] === undefined) {
+      } else if (tokens[i].length > 0 && tokens[i].match(/^[a-z][a-z0-9]*$/i) && FOOPLOT_MATH[tokens[i]] === undefined) {
         this.parseEquationError = "invalid variable or function: " + tokens[i];
         return null;
       }
@@ -1625,29 +1641,29 @@ function Fooplot(container, options) {
       this.context.strokeStyle = '#000000';
 
       switch (this.plots[i].type) {
-        case _constants.FOOPLOT_TYPE_FUNCTION:
+        case FOOPLOT_TYPE_FUNCTION:
           this.context.strokeStyle = this.plots[i].options.color;
           this.drawFunction(this.plots[i].jeq);
           break;
 
-        case _constants.FOOPLOT_TYPE_POLAR:
+        case FOOPLOT_TYPE_POLAR:
           this.context.strokeStyle = this.plots[i].options.color;
           this.drawPolar(this.plots[i].jeq, this.plots[i].options.thetamin, this.plots[i].options.thetamax, this.plots[i].options.thetastep);
           break;
 
-        case _constants.FOOPLOT_TYPE_PARAMETRIC:
+        case FOOPLOT_TYPE_PARAMETRIC:
           this.context.strokeStyle = this.plots[i].options.color;
           this.drawParametric(this.plots[i].jeqx, this.plots[i].jeqy, this.plots[i].options.smin, this.plots[i].options.smax, this.plots[i].options.sstep);
           break;
 
-        case _constants.FOOPLOT_TYPE_POINTS:
+        case FOOPLOT_TYPE_POINTS:
           this.context.fillStyle = this.plots[i].options.color;
           this.drawPoints(this.plots[i].eq);
           break;
       }
     }
 
-    if (_constants.FOOPLOT_MSIE) {
+    if (FOOPLOT_MSIE) {
       // hack for MSIE + excanvas which sometimes sporadically does not display the last-drawn path
       // so we draw a dummy path
       this.context.beginPath();
@@ -1658,13 +1674,13 @@ function Fooplot(container, options) {
   };
 
   this.addPlot = function (eq, type, options) {
-    if (!type) type = _constants.FOOPLOT_TYPE_FUNCTION;
+    if (!type) type = FOOPLOT_TYPE_FUNCTION;
     if (!options) options = {};
     if (!options.color) options.color = '#000000';
     if (!options.width) options.width = 1;
 
     switch (type) {
-      case _constants.FOOPLOT_TYPE_FUNCTION:
+      case FOOPLOT_TYPE_FUNCTION:
         {
           var jeq = this.parseEquation(eq);
 
@@ -1683,7 +1699,7 @@ function Fooplot(container, options) {
           break;
         }
 
-      case _constants.FOOPLOT_TYPE_POLAR:
+      case FOOPLOT_TYPE_POLAR:
         {
           var _jeq = this.parseEquation(eq);
 
@@ -1706,7 +1722,7 @@ function Fooplot(container, options) {
           break;
         }
 
-      case _constants.FOOPLOT_TYPE_PARAMETRIC:
+      case FOOPLOT_TYPE_PARAMETRIC:
         {
           var jeqx = this.parseEquation(eq[0]);
 
@@ -1736,7 +1752,7 @@ function Fooplot(container, options) {
           break;
         }
 
-      case _constants.FOOPLOT_TYPE_POINTS:
+      case FOOPLOT_TYPE_POINTS:
         {
           if (eq.length === null) return null;
           this.plots.push({
@@ -1775,9 +1791,9 @@ function Fooplot(container, options) {
       this.xgrid = g[0];
 
       if ((720 * g[0] / this.vars.pi).toFixed(6).match(/0000$/) !== null) {
-        this.xgridunits = _constants.FOOPLOT_UNITS_PI;
+        this.xgridunits = FOOPLOT_UNITS_PI;
       } else if ((720 * g[0] / this.vars.e).toFixed(6).match(/0000$/) !== null) {
-        this.xgridunits = _constants.FOOPLOT_UNITS_E;
+        this.xgridunits = FOOPLOT_UNITS_E;
       } else {
         this.xgridunits = null;
       }
@@ -1794,9 +1810,9 @@ function Fooplot(container, options) {
       this.ygrid = g[1];
 
       if ((720 * g[1] / this.vars.pi).toFixed(6).match(/0000$/) !== null) {
-        this.ygridunits = _constants.FOOPLOT_UNITS_PI;
+        this.ygridunits = FOOPLOT_UNITS_PI;
       } else if ((720 * g[1] / this.vars.e).toFixed(6).match(/0000$/) !== null) {
-        this.ygridunits = _constants.FOOPLOT_UNITS_E;
+        this.ygridunits = FOOPLOT_UNITS_E;
       } else {
         this.ygridunits = null;
       }
@@ -1890,6 +1906,7 @@ var FOOPLOT_TRANSITIONS = function () {
   return false;
 }();
 
+Fooplot.CONSTANTS = FOOPLOT_CONSTANTS;
 var _default = Fooplot;
 exports.default = _default;
 },{"./constants":"lib/constants.js"}],"sample.js":[function(require,module,exports) {
@@ -1936,7 +1953,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61960" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52799" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
