@@ -230,6 +230,11 @@ exports.FOOPLOT_MATH = FOOPLOT_MATH;
 },{}],"lib/index.js":[function(require,module,exports) {
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
 var _constants = require("./constants");
 
 /********************************************************************
@@ -919,31 +924,22 @@ function Fooplot(container, options) {
       }
     }
   };
-
-  this.container.onmouseover = function (e) {
-    if (e === null) e = window.event;
-
-    for (var i in FOOPLOT_INSTANCES) {
-      if (this === FOOPLOT_INSTANCES[i].container) var _self = FOOPLOT_INSTANCES[i];
-    }
-
-    if (e && e.preventDefault) e.preventDefault();
-    _self.toolcontainer.style.visibility = 'visible';
-    if (e && (e.srcElement ? e.srcElement : e.target).className === 'fooplot-tool') return null;
-  };
-
-  this.container.onmouseout = function (e) {
-    if (e === null) e = window.event;
-
-    for (var i in FOOPLOT_INSTANCES) {
-      if (this === FOOPLOT_INSTANCES[i].container) var _self = FOOPLOT_INSTANCES[i];
-    }
-
-    if (e && e.preventDefault) e.preventDefault();
-    _self.toolcontainer.style.visibility = 'hidden';
-    if (e && (e.srcElement ? e.srcElement : e.target).className == 'fooplot-tool') return null;
+  /* this.container.onmouseover=function(e) {
+    if(e === null) e = window.event;
+    for (let i in FOOPLOT_INSTANCES) if(this===FOOPLOT_INSTANCES[i].container) var _self=FOOPLOT_INSTANCES[i];
+    if(e && e.preventDefault) e.preventDefault();
+    _self.toolcontainer.style.visibility='visible';
+    if(e && (e.srcElement?e.srcElement:e.target).className==='fooplot-tool') return null;
+  }
+   this.container.onmouseout=function(e) {
+    if(e === null) e = window.event;
+    for (let i in FOOPLOT_INSTANCES) if(this===FOOPLOT_INSTANCES[i].container) var _self=FOOPLOT_INSTANCES[i];
+    if(e && e.preventDefault) e.preventDefault();
+    _self.toolcontainer.style.visibility='hidden';
+    if(e && (e.srcElement?e.srcElement:e.target).className=='fooplot-tool') return null;
     this.onmouseup(e);
-  };
+  } */
+
 
   this.container.onmousedown = function (e) {
     if (e === null) e = window.event;
@@ -1894,19 +1890,20 @@ var FOOPLOT_TRANSITIONS = function () {
   return false;
 }();
 
-module.exports = Fooplot;
+var _default = Fooplot;
+exports.default = _default;
 },{"./constants":"lib/constants.js"}],"sample.js":[function(require,module,exports) {
-var Fooplot = require('./lib');
+"use strict";
 
-var _require = require('./lib/constants'),
-    FOOPLOT_TYPE_FUNCTION = _require.FOOPLOT_TYPE_FUNCTION,
-    FOOPLOT_TYPE_POLAR = _require.FOOPLOT_TYPE_POLAR;
+var _lib = _interopRequireDefault(require("./lib"));
+
+var _constants = require("./lib/constants");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function main() {
-  // lots more features are available, this is just a "hello world"
-  // program.
-  myPlot = new Fooplot(document.getElementById('myPlot'));
-  myPlot.addPlot('sin(x)+0.5/x', FOOPLOT_TYPE_FUNCTION);
+  var myPlot = new _lib.default(document.getElementById('myPlot'));
+  myPlot.addPlot('sin(x)+0.5/x', _constants.FOOPLOT_TYPE_FUNCTION);
   myPlot.reDraw();
 }
 
@@ -1939,7 +1936,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60863" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61960" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

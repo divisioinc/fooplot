@@ -1,11 +1,9 @@
-const Fooplot = require('./lib')
-const { FOOPLOT_TYPE_FUNCTION, FOOPLOT_TYPE_POLAR} = require('./lib/constants')
+import Fooplot from './lib'
+import { FOOPLOT_TYPE_FUNCTION } from './lib/constants'
 
 function main() {
-  // lots more features are available, this is just a "hello world"
-  // program.
-  myPlot = new Fooplot(document.getElementById('myPlot'));
-  myPlot.addPlot('sin(x)+0.5/x',FOOPLOT_TYPE_FUNCTION);
+  const myPlot = new Fooplot(document.getElementById('myPlot'));
+  myPlot.addPlot('sin(x)+0.5/x', FOOPLOT_TYPE_FUNCTION);
   myPlot.reDraw();
 }
 

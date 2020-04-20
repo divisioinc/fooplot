@@ -2,11 +2,11 @@
   "name": "fooplot",
   "version": "1.0.0",
   "description": "fooplot =======",
-  "main": "fooplot.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "parcel sample.html",
-    "build": "parcel build footplot.js"
+    "build": "parcel build lib/index.js"
   },
   "repository": {
     "type": "git",
