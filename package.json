@@ -1,0 +1,25 @@
+{
+  "name": "fooplot",
+  "version": "1.0.0",
+  "description": "fooplot =======",
+  "main": "fooplot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "parcel sample.html",
+    "build": "parcel build footplot.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/divisioinc/fooplot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/divisioinc/fooplot/issues"
+  },
+  "homepage": "https://github.com/divisioinc/fooplot#readme",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "parcel-bundler": "^1.12.4"
+  }
+}
